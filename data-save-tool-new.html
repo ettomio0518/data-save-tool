@@ -50,6 +50,20 @@
             height: 200px;
         }
 
+		#button2 {
+		    padding: 3px 10px;
+		    background-color: #ffffbd;
+		    border: 1px solid #ccc;
+		    border-radius: 5px;
+		    font-size: 14px;
+		    cursor: pointer;
+		    width: auto;
+		    border: 1px solid #0000ff;
+		}
+		#button2:hover {
+		    background-color: #e5e5e5;
+		}
+		
     </style>
 </head>
 <body>
@@ -59,9 +73,11 @@
     <p>WebViewを使用する本アプリは少し操作が複雑になることをご了承ください。</p>
     <h3>保存したデータを貼り付け</h3>    
 	<h4>・先ほど保存したデータを下の枠内に貼り付けます。</h4>
-
+	<button id="button2">クリップボードから貼り付け</button>
+	<br><br>
     <label for="output">出力結果:</label>
-    <textarea id="output"></textarea>
+
+    <textarea id="output" placeholder="ここに長押しして『貼り付け』を実行してください。"></textarea>
 
     <h3>データの保存</h3>
 	<p>スマートフォンの<strong>ダウンロード</strong>フォルダに保存します。</p>
@@ -74,8 +90,21 @@
     <button onclick="downloadJSON2()">「key保存.json」</button>
     <p class="note">全データが選択され、「key保存.json」の名前で
     保存されました。</p>
-
+    <h4>・ここでこのツールを終了するために元に戻りましょう。</h4>
     
+
+    <script>
+	document.getElementById('button2').addEventListener('click', async function () {
+	    try {
+	        const text = await navigator.clipboard.readText();
+	        document.getElementById('output').value = text;
+	    } catch (err) {
+	        alert('クリップボードの読み取りに失敗しました。\nブラウザやOSの制限が影響している可能性があります。');
+	        console.error('Clipboard read failed:', err);
+	    }
+	});
+	</script>
+
     <script>
 
         function outputJSON() {
@@ -119,6 +148,6 @@
         
     </script>
 	<br>
-    <p>----- 250621 ettomio</p>
+    <p>----- 250622 ettomio</p>
 </body>
 </html>
